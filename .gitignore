@@ -4,6 +4,10 @@
 **/*.jar
 **/*.war
 **/*.ear
+backend/.settings/
+backend/.classpath
+backend/.project
+backend/.factorypath
 **/*.log
 **/build.log
 **/run*.log
@@ -30,6 +34,16 @@
 **/ios/.symlinks/
 **/ios/Pods/
 **/ios/.generated/
+**/ios/Flutter/Generated.xcconfig
+**/ios/Flutter/flutter_export_environment.sh
+**/ios/Flutter/App.framework
+**/ios/Flutter/Flutter.framework
+**/ios/Flutter/Flutter.podspec
+
+# Linux/Windows/macOS
+**/linux/flutter/ephemeral/
+**/windows/flutter/ephemeral/
+**/macos/Flutter/ephemeral/
 
 # IDE
 **/.vscode/
