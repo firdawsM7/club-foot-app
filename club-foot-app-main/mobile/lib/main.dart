@@ -23,6 +23,9 @@ import 'screens/cotisations/cotisations_screen.dart';
 import 'screens/calendar/calendar_screen.dart';
 import 'screens/profile/profile_screen.dart';
 import 'screens/admin/dashboard_screen.dart';
+import 'screens/encadrant/encadrant_dashboard.dart';
+import 'screens/adherent/adherent_dashboard.dart';
+import 'screens/inscrit/inscrit_dashboard.dart';
 // Temporarily commented out - need to be updated to use new UserDocumentProvider
 // import 'screens/admin/documents/documents_list_screen.dart';
 import 'screens/messages_screen.dart';
@@ -94,6 +97,9 @@ class MyApp extends StatelessWidget {
               '/calendar': (context) => const CalendarScreen(),
               '/profile': (context) => const ProfileScreen(),
               '/admin/dashboard': (context) => const AdminDashboardScreen(),
+              '/encadrant/dashboard': (context) => const EncadrantDashboard(),
+              '/adherent/dashboard': (context) => const AdherentDashboard(),
+              '/inscrit/dashboard': (context) => const InscritDashboard(),
               // '/admin/documents': (context) => const DocumentsListScreen(), // Temporarily disabled
               '/messages': (context) => const MessagesScreen(),
               '/add-user': (context) => AddUserScreen(),

@@ -8,6 +8,9 @@ import '../equipes/equipes_screen.dart';
 import '../joueurs/joueurs_screen.dart';
 import '../users/users_screen.dart';
 import '../profile/profile_screen.dart';
+import '../encadrant/encadrant_dashboard.dart';
+import '../adherent/adherent_dashboard.dart';
+import '../inscrit/inscrit_dashboard.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -51,9 +54,23 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _buildBody(String role) {
+    // Redirect to role-specific dashboard on first tab
+    if (_currentIndex == 0) {
+      switch (role) {
+        case 'ADMIN':
+          return _buildDashboard(role);
+        case 'ENCADRANT':
+          return const EncadrantDashboard();
+        case 'ADHERENT':
+          return const AdherentDashboard();
+        case 'INSCRIT':
+          return const InscritDashboard();
+        default:
+          return _buildDashboard(role);
+      }
+    }
+    
     switch (_currentIndex) {
-      case 0:
-        return _buildDashboard(role);
       case 1:
         return const EquipesScreen();
       case 2:
