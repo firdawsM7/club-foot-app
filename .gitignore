@@ -1,0 +1,59 @@
+# Java/Backend
+**/target/
+**/*.class
+**/*.jar
+**/*.war
+**/*.ear
+**/*.log
+**/build.log
+**/run*.log
+**/*error*.log
+**/*compile*.log
+**/*compile*.txt
+
+# Flutter/Dart
+**/build/
+**/.dart_tool/
+**/pubspec.lock
+**/.flutter-plugins
+**/.flutter-plugins-dependencies
+**/.metadata
+
+# Android
+**/android/.gradle/
+**/android/local.properties
+**/android/.idea/
+**/*.apk
+**/*.aab
+
+# iOS
+**/ios/.symlinks/
+**/ios/Pods/
+**/ios/.generated/
+
+# IDE
+**/.vscode/
+**/.idea/
+**/*.swp
+**/*.swo
+**/*~
+**/.DS_Store
+
+# Environment
+**/.env
+**/.env.local
+
+# Database
+**/*.db
+**/*.sql.bak
+
+# OS
+**/Thumbs.db
+**/desktop.ini
+
+# Temporary files
+**/*.tmp
+**/*.temp
+
+# Uploads (optional - uncomment if you want to ignore user uploads)
+# **/uploads/
