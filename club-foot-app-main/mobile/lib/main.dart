@@ -24,6 +24,7 @@ import 'screens/calendar/calendar_screen.dart';
 import 'screens/profile/profile_screen.dart';
 import 'screens/admin/dashboard_screen.dart';
 import 'screens/encadrant/encadrant_dashboard.dart';
+import 'screens/encadrant/encadrant_entrainements_screen.dart';
 import 'screens/adherent/adherent_dashboard.dart';
 import 'screens/inscrit/inscrit_dashboard.dart';
 // Temporarily commented out - need to be updated to use new UserDocumentProvider
@@ -92,6 +93,7 @@ class MyApp extends StatelessWidget {
               '/equipes': (context) => const EquipesScreen(),
               '/joueurs': (context) => const JoueursScreen(),
               '/entrainements': (context) => const EntrainementsScreen(),
+              '/encadrant/entrainements': (context) => const EncadrantEntrainementsScreen(),
               '/matchs': (context) => const MatchsScreen(),
               '/cotisations': (context) => const CotisationsScreen(),
               '/calendar': (context) => const CalendarScreen(),

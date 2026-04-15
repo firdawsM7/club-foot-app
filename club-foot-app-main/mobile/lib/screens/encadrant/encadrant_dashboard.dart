@@ -224,8 +224,8 @@ class _EncadrantDashboardState extends State<EncadrantDashboard> {
         _buildActionCard(
           'Entraînements',
           Icons.fitness_center,
-          'Planifier',
-          '/entrainements',
+          'Gérer mes séances',
+          '/encadrant/entrainements',
         ),
         _buildActionCard(
           'Matchs',
