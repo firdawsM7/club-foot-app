@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import '../../core/theme/app_theme.dart';
 import '../../services/api_service.dart';
 import '../../models/models.dart';
+import '../../providers/auth_provider.dart';
 
 class EntrainementsScreen extends StatefulWidget {
   const EntrainementsScreen({super.key});
@@ -17,6 +19,8 @@ class _EntrainementsScreenState extends State<EntrainementsScreen> {
   List<User> _encadrants = [];
   bool _isLoading = true;
   String _error = '';
+  String _userRole = 'INSCRIT';
+  int? _userId;
 
   @override
   void initState() {
@@ -31,15 +35,36 @@ class _EntrainementsScreenState extends State<EntrainementsScreen> {
     });
 
     try {
-      final entrainements = await ApiService.getAllEntrainements('ADMIN');
-      final equipes = await ApiService.getAllEquipes('ADMIN');
-      final users = await ApiService.getAllUsers();
-      final encadrants = users.where((u) => u.role == 'ENCADRANT').toList();
+      final authProvider = Provider.of<AuthProvider>(context, listen: false);
+      final user = authProvider.user;
+      final role = user?.role ?? 'INSCRIT';
+      final userId = user?.id;
+
+      // Load entrainements based on role
+      List<Entrainement> entrainements;
+      if (role == 'ENCADRANT' && userId != null) {
+        // For encadrant, load only their assigned sessions
+        entrainements = await ApiService.getAllEntrainements(role, encadrantId: userId);
+      } else {
+        // For admin and others, load all
+        entrainements = await ApiService.getAllEntrainements(role);
+      }
+      
+      final equipes = await ApiService.getAllEquipes(role);
+      
+      // Load encadrants only for admin
+      List<User> encadrants = [];
+      if (role == 'ADMIN') {
+        final users = await ApiService.getAllUsers();
+        encadrants = users.where((u) => u.role == 'ENCADRANT').toList();
+      }
       
       setState(() {
         _entrainements = entrainements;
         _equipes = equipes;
         _encadrants = encadrants;
+        _userRole = role;
+        _userId = userId;
         _isLoading = false;
       });
     } catch (e) {
@@ -105,10 +130,12 @@ class _EntrainementsScreenState extends State<EntrainementsScreen> {
       appBar: AppBar(
         title: const Text('Gestion des Entraînements'),
         actions: [
-          IconButton(
-            icon: const Icon(Icons.add),
-            onPressed: () => _showEntrainementForm(),
-          ),
+          // Only show add button for ADMIN
+          if (_userRole == 'ADMIN')
+            IconButton(
+              icon: const Icon(Icons.add),
+              onPressed: () => _showEntrainementForm(),
+            ),
         ],
       ),
       body: Container(
@@ -294,20 +321,23 @@ class _EntrainementsScreenState extends State<EntrainementsScreen> {
                 style: const TextStyle(fontSize: 14, color: Colors.white70),
               ),
             ],
-            const SizedBox(height: 12),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.edit, color: Colors.blue),
-                  onPressed: () => _showEntrainementForm(entrainement: entrainement),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.delete, color: Colors.red),
-                  onPressed: () => _deleteEntrainement(entrainement),
-                ),
-              ],
-            ),
+            // Only show edit and delete buttons for ADMIN
+            if (_userRole == 'ADMIN') ...[
+              const SizedBox(height: 12),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.edit, color: Colors.blue),
+                    onPressed: () => _showEntrainementForm(entrainement: entrainement),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.delete, color: Colors.red),
+                    onPressed: () => _deleteEntrainement(entrainement),
+                  ),
+                ],
+              ),
+            ],
           ],
         ),
       ),

@@ -268,10 +268,13 @@ class ApiService {
 
   // ==================== ENTRAÎNEMENTS ====================
   
-  static Future<List<Entrainement>> getAllEntrainements(String role) async {
+  static Future<List<Entrainement>> getAllEntrainements(String role, {int? encadrantId}) async {
     String url;
     if (role == 'ADMIN') {
       url = ApiConfig.adminEntrainements;
+    } else if (role == 'ENCADRANT' && encadrantId != null) {
+      // Use the new endpoint for encadrant-specific trainings
+      url = ApiConfig.encadrantEntrainementsByEncadrant(encadrantId);
     } else if (role == 'ENCADRANT') {
       url = ApiConfig.encadrantEntrainements;
     } else {

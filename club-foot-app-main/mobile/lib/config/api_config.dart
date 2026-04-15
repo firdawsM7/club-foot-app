@@ -58,6 +58,8 @@ class ApiConfig {
   static String get encadrantEquipes => '$apiBaseUrl/encadrant/equipes';
   static String get encadrantEntrainements => '$apiBaseUrl/encadrant/entrainements';
   static String get encadrantMatchs => '$apiBaseUrl/encadrant/matchs';
+  static String encadrantEntrainementsByEncadrant(int encadrantId) => 
+      '$apiBaseUrl/encadrant/entrainements/mes-seances/$encadrantId';
   
   // Adherent endpoints
   static String get adherentProfil => '$apiBaseUrl/adherent/profil';

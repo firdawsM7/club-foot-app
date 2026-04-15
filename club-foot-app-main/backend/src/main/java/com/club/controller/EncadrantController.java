@@ -80,6 +80,16 @@ public class EncadrantController {
         return ResponseEntity.ok(entrainementService.getAllEntrainements());
     }
     
+    @GetMapping("/entrainements/mes-seances/{encadrantId}")
+    public ResponseEntity<List<Entrainement>> getMesSeances(@PathVariable Long encadrantId) {
+        List<Entrainement> allEntrainements = entrainementService.getAllEntrainements();
+        // Filter trainings assigned to this encadrant
+        List<Entrainement> mesSeances = allEntrainements.stream()
+            .filter(e -> e.getEncadrant() != null && e.getEncadrant().getId().equals(encadrantId))
+            .collect(java.util.stream.Collectors.toList());
+        return ResponseEntity.ok(mesSeances);
+    }
+    
     @GetMapping("/entrainements/{id}")
     public ResponseEntity<Entrainement> getEntrainementById(@PathVariable Long id) {
         return ResponseEntity.ok(entrainementService.getEntrainementById(id));
