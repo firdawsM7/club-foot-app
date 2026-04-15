@@ -179,6 +179,8 @@ class Entrainement {
   final String? objectif;
   final String? exercices;
   final int? encadrantId;
+  final String? encadrantNom;
+  final String? encadrantPrenom;
   final String statut;
   final String? notes;
 
@@ -191,11 +193,14 @@ class Entrainement {
     this.objectif,
     this.exercices,
     this.encadrantId,
+    this.encadrantNom,
+    this.encadrantPrenom,
     this.statut = 'PLANIFIE',
     this.notes,
   });
 
   factory Entrainement.fromJson(Map<String, dynamic> json) {
+    final encadrant = json['encadrant'];
     return Entrainement(
       id: json['id'],
       equipeId: json['equipe']?['id'] ?? 0,
@@ -204,7 +209,9 @@ class Entrainement {
       duree: json['duree'],
       objectif: json['objectif'],
       exercices: json['exercices'],
-      encadrantId: json['encadrant']?['id'],
+      encadrantId: encadrant?['id'],
+      encadrantNom: encadrant?['nom'],
+      encadrantPrenom: encadrant?['prenom'],
       statut: json['statut'] ?? 'PLANIFIE',
       notes: json['notes'],
     );
@@ -219,6 +226,7 @@ class Entrainement {
       'exercices': exercices,
       'statut': statut,
       'notes': notes,
+      if (encadrantId != null) 'encadrant': {'id': encadrantId},
     };
   }
 }

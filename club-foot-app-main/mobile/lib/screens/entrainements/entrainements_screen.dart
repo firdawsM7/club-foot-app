@@ -245,6 +245,19 @@ class _EntrainementsScreenState extends State<EntrainementsScreen> {
                 Text(entrainement.lieu),
               ],
             ),
+            if (entrainement.encadrantNom != null || entrainement.encadrantPrenom != null) ...[
+              const SizedBox(height: 8),
+              Row(
+                children: [
+                  const Icon(Icons.person, size: 16, color: Colors.grey),
+                  const SizedBox(width: 8),
+                  Text(
+                    'Encadrant: ${entrainement.encadrantPrenom ?? ''} ${entrainement.encadrantNom ?? ''}'
+                        .trim(),
+                  ),
+                ],
+              ),
+            ],
             if (entrainement.objectif != null && entrainement.objectif!.isNotEmpty) ...[
               const SizedBox(height: 12),
               const Text(
@@ -404,7 +417,10 @@ class _EntrainementFormDialogState extends State<EntrainementFormDialog> {
     };
 
     if (_dureeController.text.isNotEmpty) {
-      entrainementData['duree'] = int.parse(_dureeController.text);
+      final dureeValue = int.tryParse(_dureeController.text);
+      if (dureeValue != null && dureeValue > 0) {
+        entrainementData['duree'] = dureeValue;
+      }
     }
     if (_objectifController.text.isNotEmpty) {
       entrainementData['objectif'] = _objectifController.text;
